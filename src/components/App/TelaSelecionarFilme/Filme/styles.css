@@ -1,0 +1,13 @@
+.Filme {
+    width: 145px;
+    height: 209px;
+
+    margin-bottom: 11px;
+
+    padding: 8px;
+}
+
+.Filme img {
+    width: 129px;
+    height: 193px;
+}
