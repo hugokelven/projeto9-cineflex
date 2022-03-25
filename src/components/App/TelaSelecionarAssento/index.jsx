@@ -3,6 +3,8 @@ import { useParams  } from "react-router-dom";
 import styled from 'styled-components'
 import axios from "axios"
 
+import Assento from "./Assento";
+
 export default function TelaSelecionarAssento() {
 
     const [sessao, setSessao] = useState([])
@@ -29,26 +31,23 @@ export default function TelaSelecionarAssento() {
                 {sessao.seats?.map(assento =>
                     <Assento
                         key={assento.id}
-                        className="centralizar-conteudo"
-                        estaDisponivel={assento.isAvailable}>
-
-                        {assento.name}
-
-                    </Assento>)
+                        estaDisponivel={assento.isAvailable}
+                        numeroAssento={assento.name}
+                    />)
                 }
             </div>
 
             <div className="legenda">
                 <div>
-                    <Assento className="selecionado"></Assento>
+                    <div className="legenda__icone selecionado"></div>
                     <p>Selecionado</p>
                 </div>
                 <div>
-                    <Assento estaDisponivel={true}></Assento>
+                    <div className="legenda__icone disponivel"></div>
                     <p>Disponível</p>
                 </div>
                 <div>
-                    <Assento></Assento>
+                    <div className="legenda__icone indisponivel"></div>
                     <p>Indisponível</p>
                 </div>
             </div>
@@ -103,6 +102,14 @@ const SelecionarAssento = styled.div`
         flex-direction: column;
         align-items: center;
     }
+    .legenda__icone {
+        width: 26px;
+        height: 26px;
+
+        margin: 0 3.5px 18px 3.5px;
+
+        border-radius: 12px;
+    }
     .legenda p {
         font-style: normal;
         font-weight: 400;
@@ -113,6 +120,14 @@ const SelecionarAssento = styled.div`
         margin-bottom: 40px;
 
         color: #4E5A65;
+    }
+    .legenda .disponivel {
+        border: 1px solid #808F9D;
+        background: #C3CFD9;
+    }
+    .legenda .indisponivel {
+        border: 1px solid #F7C52B;
+        background: #FBE192;
     }
 
     .selecionado {
@@ -135,7 +150,6 @@ const SelecionarAssento = styled.div`
         color: #293845;
     }
     .inputs input {
-        width: 100%;
         height: 51px;
 
         font-weight: 400;
@@ -204,16 +218,4 @@ const SelecionarAssento = styled.div`
         width: 48px;
         height: 72px;
     }
-`
-
-const Assento = styled.div`
-    width: 26px;
-    height: 26px;
-
-    margin: 0 3.5px 18px 3.5px;
-
-    border-radius: 12px;
-    border: 1px solid ${props => props.estaDisponivel === true ? "#808F9D" : "#F7C52B"};
-
-    background: ${props => props.estaDisponivel === true ? "#C3CFD9" : "#FBE192"};
 `
