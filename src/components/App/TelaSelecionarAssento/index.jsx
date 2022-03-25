@@ -1,5 +1,5 @@
 export default function TelaSelecionarAssento() {
     return(
-        <div className="TelaSelecionarAssento"></div>
+        <div className="TelaSelecionarAssento">Selecionar assento</div>
     )
 }

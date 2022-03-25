@@ -14,8 +14,8 @@ export default function App() {
                 <header className="centralizar-conteudo">CINEFLEX</header>
                 <Routes>
                     <Route path="/" element={<TelaSelecionarFilme/>}></Route>
-                    <Route path="/filme/:idFilme" element={<TelaSelecionarHorario/>}></Route>
-                    <Route path="/sessao" element={<TelaSelecionarAssento/>}></Route>
+                    <Route path="/sessoes/:idFilme" element={<TelaSelecionarHorario/>}></Route>
+                    <Route path="/assentos/:idSessao" element={<TelaSelecionarAssento/>}></Route>
                     <Route path="/sucesso" element={<TelaFinalizacao/>}></Route>
                 </Routes>
             </BrowserRouter>

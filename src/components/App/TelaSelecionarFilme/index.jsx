@@ -26,7 +26,7 @@ export default function TelaSelecionarFilme() {
             <h2>Selecione o Filme</h2>
             <section>
                 {filmes.map(filme => 
-                <Link key={filme.id} to={`/filme/${filme.id}`}>
+                <Link key={filme.id} to={`/sessoes/${filme.id}`}>
                     <Filme src={filme.posterURL} alt={filme.title}/>
                 </Link>)}
             </section>
