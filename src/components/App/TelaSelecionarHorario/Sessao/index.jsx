@@ -19,8 +19,6 @@ export default function Sessao({data, horarios, diaSemana}) {
 }
 
 const FilmeSessao = styled.div`
-    width: 100%
-
     p {
         font-style: normal;
         font-weight: 400;

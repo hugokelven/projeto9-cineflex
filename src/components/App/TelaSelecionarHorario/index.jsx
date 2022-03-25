@@ -48,16 +48,28 @@ export default function TelaSelecionarHorario() {
 const SelecionarHorario = styled.div`
     margin: 0 24px;
 
+    footer {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        
+        height: 117px;
+        
+        display: flex;
+        align-items: center;
+        
+        margin-top: 100px;
+
+        border: 1px solid #9EADBA;
+        
+        background: #DFE6ED;
+    }
+
     footer h1 {
         font-style: normal;
         font-weight: 400;
         font-size: 26px;
         line-height: 30px;
         color: #293845;
-    }
-
-    h2 {
-        text-align: center;
     }
 
     footer div {
@@ -74,21 +86,5 @@ const SelecionarHorario = styled.div`
     footer div img {
         width: 48px;
         height: 72px;
-    }
-
-    footer {
-        position: fixed;
-        bottom: 0; left: 0; right: 0;
-
-        height: 117px;
-
-        display: flex;
-        align-items: center;
-
-        margin-top: 100px;
-
-        border: 1px solid #9EADBA;
-        
-        background: #DFE6ED;
     }
 `
