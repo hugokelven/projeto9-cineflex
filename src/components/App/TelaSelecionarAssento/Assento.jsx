@@ -1,22 +1,27 @@
 import { useState, useEffect } from "react"
 import styled from 'styled-components'
 
-export default function Assento({estaDisponivel, numeroAssento}) {
+export default function Assento({estaDisponivel, numeroAssento, id, obterIds}) {
 
     const [selecionado, setSelecionado] = useState("")
 
-    function selecionar() {
+    function selecionar(e) {
         if (!estaDisponivel) {
             alert("Esse assento não está disponível")
         } else if (selecionado === "") {
             setSelecionado("selecionado")
+            obterIds(parseInt(e.target.id), "adicionar")
         } else {
             setSelecionado("")
+            obterIds(parseInt(e.target.id), "remover")
         }
+
+        console.log(e.target.id)
     }
 
     return(
-        <Cadeira 
+        <Cadeira
+            id={id}
             className={`centralizar-conteudo ${selecionado}`}
             estaDisponivel={estaDisponivel}
             onClick={selecionar}>

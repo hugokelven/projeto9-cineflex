@@ -9,8 +9,26 @@ export default function TelaSelecionarAssento() {
 
     const [sessao, setSessao] = useState([])
 
+    const [ids, setIds] = useState([])
+
+    const [nome, setNome] = useState("")
+    const [CPF, setCPF] = useState("")
+
+    function obterIds(id, acao) {
+        if (acao === "adicionar") {
+            setIds([...ids, id])
+        } else {
+            const idsAtualizados = ids.filter(el => {
+                if (el !== id) {
+                    return true
+                }
+            })
+            setIds(idsAtualizados)
+        }
+        console.log(ids)
+    }
+
     const { idSessao } = useParams();
-    console.log("sessao id: " + idSessao);
 
     useEffect(() => {
         const promessa = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
@@ -23,6 +41,16 @@ export default function TelaSelecionarAssento() {
         promessa.catch(erro => console.log(erro.response))
     }, [])
 
+    function enviarDadosUsuario(e) {
+        e.preventDefault()
+        
+        const promessa = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", {ids: ids, name: nome, cpf: CPF})
+
+        promessa.then(resposta => {console.log(resposta.data)})
+
+        promessa.catch(erro => {console.log(erro.response)})
+    }
+
     return(
         <SelecionarAssento>
             <h2>Selecione o(s) assento(s)</h2>
@@ -31,8 +59,10 @@ export default function TelaSelecionarAssento() {
                 {sessao.seats?.map(assento =>
                     <Assento
                         key={assento.id}
+                        id={assento.id}
                         estaDisponivel={assento.isAvailable}
                         numeroAssento={assento.name}
+                        obterIds={obterIds}
                     />)
                 }
             </div>
@@ -52,18 +82,31 @@ export default function TelaSelecionarAssento() {
                 </div>
             </div>
 
-            <div className="inputs">
+            <form onSubmit={enviarDadosUsuario}>
                 <div>
-                    <p>Nome do comprador:</p>
-                    <input type="text" placeholder="Digite seu nome..."/>
+                    <label htmlFor="nome">Nome do comprador:</label>
+                    <input
+                        id="nome"
+                        type="text" required
+                        placeholder="Digite seu nome..."
+                        value={nome}
+                        onChange={e => setNome(e.target.value)}
+                    />
                 </div>
                 <div>
-                    <p>CPF do comprador:</p>
-                    <input type="text" placeholder="Digite seu CPF..." />
+                    <label htmlFor="CPF">CPF do comprador:</label>
+                    <input
+                        id="CPF"
+                        type="text" required
+                        placeholder="Digite seu CPF..."
+                        value={CPF}
+                        onChange={e => setCPF(e.target.value)}
+                    />
                 </div>
-            </div>
 
-            <button>Reservar assento(s)</button>
+                <button type="submit">Reservar assento(s)</button>
+            </form>
+
 
             <footer>
                 <div className="centralizar-conteudo">
@@ -136,20 +179,21 @@ const SelecionarAssento = styled.div`
         background: #8DD7CF;
     }
 
-    .inputs {
+    form {
         margin: 0 24px;
     }
-    .inputs div {
+    form div {
         margin-bottom: 7px;
     }
-    .inputs p {
+    form label {
         font-style: normal;
         font-weight: 400;
         font-size: 18px;
         line-height: 21px;
         color: #293845;
     }
-    .inputs input {
+    form input {
+        width: 100%;
         height: 51px;
 
         font-weight: 400;
