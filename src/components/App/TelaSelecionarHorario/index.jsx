@@ -10,14 +10,12 @@ export default function TelaSelecionarHorario() {
     const [filme, setFilme] = useState([])
 
     const { idFilme } = useParams();
-    console.log("filme id: " + idFilme);
     
     useEffect(() => {
     
         const promessa = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
     
         promessa.then(resposta => {
-            console.log(resposta.data)
             setFilme(resposta.data)
         })
     

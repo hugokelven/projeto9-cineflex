@@ -1,31 +1,40 @@
 import { useState, useEffect } from "react"
-import { useParams  } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from 'styled-components'
 import axios from "axios"
 
 import Assento from "./Assento";
 
-export default function TelaSelecionarAssento() {
+export default function TelaSelecionarAssento({obterDadosPedido}) {
 
     const [sessao, setSessao] = useState([])
 
-    const [ids, setIds] = useState([])
+    const [assentoInfo, setAssentoInfo] = useState({ids: [], numeros: []})
 
     const [nome, setNome] = useState("")
     const [CPF, setCPF] = useState("")
 
-    function obterIds(id, acao) {
+    const navigate = useNavigate()
+
+    function obterAssentoInfo(info, acao) {
         if (acao === "adicionar") {
-            setIds([...ids, id])
+            setAssentoInfo({...assentoInfo, ids: [...assentoInfo.ids, info[0]], numeros: [...assentoInfo.numeros, info[1]]})
         } else {
-            const idsAtualizados = ids.filter(el => {
-                if (el !== id) {
+            const idsAtualizados = assentoInfo.ids.filter(id => {
+                if (id !== info[0]) {
                     return true
                 }
             })
-            setIds(idsAtualizados)
+
+            const numerosAtualizados = assentoInfo.numeros.filter(numero => {
+                if (numero !== info[1]) {
+                    return true
+                }
+            })
+
+            setAssentoInfo({...assentoInfo, ids: idsAtualizados, numeros: numerosAtualizados})
         }
-        console.log(ids)
+        console.log(assentoInfo)
     }
 
     const { idSessao } = useParams();
@@ -44,9 +53,17 @@ export default function TelaSelecionarAssento() {
     function enviarDadosUsuario(e) {
         e.preventDefault()
         
-        const promessa = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", {ids: ids, name: nome, cpf: CPF})
+        const promessa = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", {ids: assentoInfo.ids, name: nome, cpf: CPF})
 
-        promessa.then(resposta => {console.log(resposta.data)})
+        promessa.then(resposta => {
+            navigate("/sucesso", {
+                state: {
+                    filme: {nome: sessao.movie?.title, data: sessao.day?.date, hora: sessao.name},
+                    assentos: assentoInfo.numeros,
+                    comprador: {nome: nome, cpf: CPF}
+                }
+            })
+        })
 
         promessa.catch(erro => {console.log(erro.response)})
     }
@@ -62,7 +79,7 @@ export default function TelaSelecionarAssento() {
                         id={assento.id}
                         estaDisponivel={assento.isAvailable}
                         numeroAssento={assento.name}
-                        obterIds={obterIds}
+                        obterAssentoInfo={obterAssentoInfo}
                     />)
                 }
             </div>

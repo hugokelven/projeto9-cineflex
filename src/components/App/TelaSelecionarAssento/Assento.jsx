@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import styled from 'styled-components'
 
-export default function Assento({estaDisponivel, numeroAssento, id, obterIds}) {
+export default function Assento({estaDisponivel, numeroAssento, id, obterAssentoInfo}) {
 
     const [selecionado, setSelecionado] = useState("")
 
@@ -10,13 +10,13 @@ export default function Assento({estaDisponivel, numeroAssento, id, obterIds}) {
             alert("Esse assento não está disponível")
         } else if (selecionado === "") {
             setSelecionado("selecionado")
-            obterIds(parseInt(e.target.id), "adicionar")
+            obterAssentoInfo([parseInt(e.target.id), e.target.innerText], "adicionar")
         } else {
             setSelecionado("")
-            obterIds(parseInt(e.target.id), "remover")
+            obterAssentoInfo([parseInt(e.target.id), e.target.innerText], "remover")
         }
 
-        console.log(e.target.id)
+        console.log(e.target.innerText)
     }
 
     return(
