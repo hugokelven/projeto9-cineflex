@@ -34,7 +34,6 @@ export default function TelaSelecionarAssento({obterDadosPedido}) {
 
             setAssentoInfo({...assentoInfo, ids: idsAtualizados, numeros: numerosAtualizados})
         }
-        console.log(assentoInfo)
     }
 
     const { idSessao } = useParams();
@@ -43,7 +42,6 @@ export default function TelaSelecionarAssento({obterDadosPedido}) {
         const promessa = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
 
         promessa.then(resposta => {
-            console.log(resposta.data)
             setSessao(resposta.data)
         })
 
@@ -241,7 +239,7 @@ const SelecionarAssento = styled.div`
     }
 
     footer {
-        position: fixed;
+        position: sticky;
         bottom: 0; left: 0; right: 0;
         
         height: 117px;

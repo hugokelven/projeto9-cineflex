@@ -15,8 +15,6 @@ export default function Assento({estaDisponivel, numeroAssento, id, obterAssento
             setSelecionado("")
             obterAssentoInfo([parseInt(e.target.id), e.target.innerText], "remover")
         }
-
-        console.log(e.target.innerText)
     }
 
     return(

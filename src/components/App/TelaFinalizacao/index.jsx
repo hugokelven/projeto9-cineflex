@@ -8,8 +8,6 @@ export default function TelaFinalizacao() {
 
     const {filme, assentos, comprador} = state
 
-    console.log(state)
-
     return(
         <$Telafinalizacao>
             <h2>Pedido feito com sucesso!</h2>
